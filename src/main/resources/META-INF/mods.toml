@@ -1,0 +1,13 @@
+modLoader="javafml"
+loaderVersion="[2.0,)"
+license="MIT"
+
+# Dòng này cực kỳ quan trọng, nó phải map đúng với mod_id
+[[mods]]
+modId="dmrgenetics"
+version="${file.jarVersion}"
+displayName="DMR Genetics"
+authors="Hoang"
+description='''
+Addon Di truyền học siêu cấp dành cho Dragon Mounts.
+'''
