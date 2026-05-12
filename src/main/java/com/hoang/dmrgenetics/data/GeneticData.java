@@ -1,7 +1,7 @@
 package com.hoang.dmrgenetics.data;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraftforge.common.util.INBTSerializable;
+import net.neoforged.neoforge.common.util.INBTSerializable;
 
 public class GeneticData implements INBTSerializable<CompoundTag> {
     private String sex = "ZZ";           // ZZ (Đực), ZW (Cái)
@@ -10,7 +10,6 @@ public class GeneticData implements INBTSerializable<CompoundTag> {
     private String mutations = "MMNNBB"; // m (Albino), n (Melanism), b (Bioluminescent)
     private String epistasis = "VV";     // v (Void - lặn, vv = Rồng hư không)
 
-    // Khởi tạo Gen mặc định cho rồng tự nhiên
     public GeneticData() {}
 
     public GeneticData(String sex, String elements, String ivs, String mutations, String epistasis) {
@@ -21,14 +20,15 @@ public class GeneticData implements INBTSerializable<CompoundTag> {
         this.epistasis = epistasis;
     }
 
-    // Getters & Setters
     public String getSex() { return sex; }
     public void setSex(String sex) { this.sex = sex; }
     
     public String getElements() { return elements; }
     public String getIvs() { return ivs; }
     public String getMutations() { return mutations; }
+    
     public String getEpistasis() { return epistasis; }
+    public void setEpistasis(String epistasis) { this.epistasis = epistasis; } // Đã fix thiếu hàm
 
     @Override
     public CompoundTag serializeNBT() {
