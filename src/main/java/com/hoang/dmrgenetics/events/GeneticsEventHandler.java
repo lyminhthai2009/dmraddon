@@ -7,13 +7,14 @@ import dmr.DragonMounts.server.entity.TameableDragonEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.BabyEntitySpawnEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 
 import java.util.Random;
 
-@Mod.EventBusSubscriber(modid = "dmrgenetics", bus = Mod.EventBusSubscriber.Bus.FORGE)
+// ĐÃ SỬA: Import đúng chuẩn mới
+@EventBusSubscriber(modid = "dmrgenetics")
 public class GeneticsEventHandler {
     private static final Random RANDOM = new Random();
 

@@ -1,14 +1,15 @@
 package com.hoang.dmrgenetics.data;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.neoforged.neoforge.common.util.INBTSerializable;
 
 public class GeneticData implements INBTSerializable<CompoundTag> {
-    private String sex = "ZZ";           // ZZ (Đực), ZW (Cái)
-    private String elements = "FF";      // F (Fire), W (Water), I (Ice)
-    private String ivs = "AaBbCc";       // A, B, C (Trội), a, b, c (Lặn)
-    private String mutations = "MMNNBB"; // m (Albino), n (Melanism), b (Bioluminescent)
-    private String epistasis = "VV";     // v (Void - lặn, vv = Rồng hư không)
+    private String sex = "ZZ";
+    private String elements = "FF";
+    private String ivs = "AaBbCc";
+    private String mutations = "MMNNBB";
+    private String epistasis = "VV";
 
     public GeneticData() {}
 
@@ -28,10 +29,11 @@ public class GeneticData implements INBTSerializable<CompoundTag> {
     public String getMutations() { return mutations; }
     
     public String getEpistasis() { return epistasis; }
-    public void setEpistasis(String epistasis) { this.epistasis = epistasis; } // Đã fix thiếu hàm
+    public void setEpistasis(String epistasis) { this.epistasis = epistasis; }
 
+    // ĐÃ SỬA: Thêm HolderLookup.Provider cho NeoForge mới
     @Override
-    public CompoundTag serializeNBT() {
+    public CompoundTag serializeNBT(HolderLookup.Provider provider) {
         CompoundTag tag = new CompoundTag();
         tag.putString("SexGen", sex);
         tag.putString("ElemGen", elements);
@@ -41,8 +43,9 @@ public class GeneticData implements INBTSerializable<CompoundTag> {
         return tag;
     }
 
+    // ĐÃ SỬA: Thêm HolderLookup.Provider cho NeoForge mới
     @Override
-    public void deserializeNBT(CompoundTag nbt) {
+    public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
         this.sex = nbt.getString("SexGen");
         this.elements = nbt.getString("ElemGen");
         this.ivs = nbt.getString("IVGen");

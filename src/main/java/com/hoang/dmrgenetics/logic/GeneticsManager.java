@@ -5,13 +5,13 @@ import dmr.DragonMounts.registry.DragonBreedsRegistry;
 import dmr.DragonMounts.server.entity.TameableDragonEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.resources.ResourceLocation;
 import java.util.Random;
-import java.util.UUID;
 
 public class GeneticsManager {
     private static final Random RANDOM = new Random();
-    // NeoForge 1.20+ có thể dùng tên thay vì UUID, nhưng xài UUID cho an toàn tương thích ngược
-    private static final UUID IV_HEALTH_MODIFIER_UUID = UUID.fromString("11111111-2222-3333-4444-555555555555");
+    // ĐÃ SỬA: NeoForge mới dùng ResourceLocation thay cho UUID
+    private static final ResourceLocation IV_HEALTH_MODIFIER_ID = ResourceLocation.fromNamespaceAndPath("dmrgenetics", "iv_health_bonus");
 
     public static String mixGenes(String p1, String p2, int pairs) {
         StringBuilder babyGenes = new StringBuilder();
@@ -54,10 +54,10 @@ public class GeneticsManager {
         
         var healthAttr = dragon.getAttribute(Attributes.MAX_HEALTH);
         if (healthAttr != null) {
-            healthAttr.removeModifier(IV_HEALTH_MODIFIER_UUID);
-            // Fix chuẩn AttributeModifier cho bản 1.20.4
+            healthAttr.removeModifier(IV_HEALTH_MODIFIER_ID);
+            // ĐÃ SỬA: Dùng ADD_VALUE chuẩn cho NeoForge 1.21+
             healthAttr.addPermanentModifier(new AttributeModifier(
-                    IV_HEALTH_MODIFIER_UUID, "IV Health Bonus", bonusHealth, AttributeModifier.Operation.ADDITION));
+                    IV_HEALTH_MODIFIER_ID, bonusHealth, AttributeModifier.Operation.ADD_VALUE));
             dragon.setHealth(dragon.getMaxHealth()); 
         }
 
