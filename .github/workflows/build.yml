@@ -1,0 +1,47 @@
+name: Build NeoForge Addon
+
+# Chạy action này mỗi khi push code lên nhánh main hoặc tạo Pull Request
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Lấy mã nguồn từ repo của bạn
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # 2. Cài đặt Java JDK (Đổi version tùy theo bản Minecraft)
+      # - Minecraft 1.20.4+ thường dùng Java 21
+      # - Minecraft 1.20.1 thường dùng Java 17
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21' 
+          
+      # 3. Cache Gradle để build nhanh hơn ở các lần sau
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      # 4. Cấp quyền thực thi cho file gradlew
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      # 5. Lệnh Build Mod ra file .jar
+      - name: Build Mod with Gradle
+        run: ./gradlew build
+
+      # 6. Lấy file .jar vừa build xong và cho phép bạn tải về từ GitHub
+      - name: Upload Artifact (Tải File .jar)
+        uses: actions/upload-artifact@v4
+        with:
+          name: DMR-Genetics-Addon-Build
+          path: build/libs/*.jar
+          # Loại bỏ file có đuôi -sources.jar hoặc -api.jar (nếu không cần)
+          if-no-files-found: error
